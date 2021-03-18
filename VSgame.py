@@ -5,7 +5,7 @@ import random # 랜덤수 함수 포함
 
 #변수 및 함수-------------------------------------------------
 #데이터#
-default_player_hp = 200
+default_player_hp = 300
 default_player_atk = 50
 default_monster_hp = 500
 default_monster_atk = 40
@@ -13,8 +13,8 @@ player_hp = 0
 player_atk = 0
 monster_hp = 0
 monster_atk = 0
-is_player_restrain = 0 #플레이어 구속 여부
-is_monster_restrain = 0 #몬스터 구속 여부
+is_player_restrain = 0 #플레이어 구속/마비 여부
+is_monster_restrain = 0 #몬스터 구속/마비 여부
 turn = 0 #현재 턴 수
 
 #게임메뉴#
@@ -115,6 +115,16 @@ def PlayerActMagicialAttack():
     monster_hp -= damage
     time.sleep(0.8)
     print('몬스터는 %d의 피해를 입었다!' %damage)
+    global is_monster_restrain
+    monster_shock_percent = random.randint(0,20)
+    if monster_shock_percent >= 17:
+        time.sleep(1)
+        print('덤으로 상대의 몸을 마비시켰다!')
+        if is_monster_restrain == 2:
+            return
+        else:
+            is_monster_restrain += 1
+
 
 def PlayerActBind():
     print('\n당신은 구속을 시도했다. ')
@@ -172,6 +182,16 @@ def MonsterActMagicalAttack():
     player_hp -= damage
     time.sleep(0.8)
     print('당신은 %d의 피해를 입었다!' %damage)
+    global is_player_restrain
+    player_shock_percent = random.randint(0,20)
+    if player_shock_percent >= 15:
+        time.sleep(1)
+        print('몸이 마비됬다..')
+        if is_player_restrain == 2:
+            return
+        else:
+            is_player_restrain += 1
+
 
 def MonsterActBind():
     print('몬스터는 덩쿨을 날렸다!')
